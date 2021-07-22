@@ -14,6 +14,7 @@ y_pac = 0
 
 pac_movex = 0
 pac_movey = 0
+speed_pac = 0.7
 
 x_coin = randint(50, 600)
 y_coin = randint(50, 450)
@@ -39,19 +40,19 @@ while True:
 
         if event.type == KEYDOWN:
             if event.key == K_a:
-                pac_movex = -0.5
+                pac_movex = -speed_pac
                 pac_movey = 0
                 x_pac = x_pac - pac_movex
             if event.key == K_d:
-                pac_movex = 0.5
+                pac_movex = speed_pac
                 pac_movey = 0
                 x_pac = x_pac + pac_movex
             if event.key == K_w:
-                pac_movey = -0.5
+                pac_movey = -speed_pac
                 pac_movex = 0
                 y_pac = y_pac - pac_movey
             if event.key == K_s:
-                pac_movey = 0.5
+                pac_movey = speed_pac
                 pac_movex = 0
                 y_pac = y_pac + pac_movey
     x_pac = x_pac + pac_movex
