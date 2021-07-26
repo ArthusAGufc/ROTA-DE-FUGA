@@ -5,9 +5,33 @@ from random import randint
 
 pygame.init()
 
+class Freeze(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        self.sprites.append(pygame.image.load("data/sprite_00.png"))
+        self.sprites.append(pygame.image.load("data/sprite_02.png"))
+        self.sprites.append(pygame.image.load("data/sprite_03.png"))
+        self.sprites.append(pygame.image.load("data/sprite_05.png"))
+        self.sprites.append(pygame.image.load("data/sprite_06.png"))
+        self.sprites.append(pygame.image.load("data/sprite_07.png"))
+        self.sprites.append(pygame.image.load("data/sprite_09.png"))
+        self.sprites.append(pygame.image.load("data/sprite_10.png"))
+        self.sprites.append(pygame.image.load("data/sprite_13.png"))
+        self.sprites.append(pygame.image.load("data/sprite_14.png"))
+        self.atual = 0
+        self.image = self.sprites[self.atual]
+        self.image = pygame.transform.scale(self.image, (32 * 2, 32 * 2))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = 100, 100
 
-altura = 500
-largura = 640
+todas_as_sprites = pygame.sprite.Group()
+freeze = Freeze()
+todas_as_sprites.add(freeze)
+
+
+altura = 650
+largura = 1300
 
 x_pac = 0
 y_pac = 0
@@ -63,10 +87,13 @@ while True:
 
     pacman = pygame.draw.rect(tela, (255, 255, 0), (x_pac, y_pac, 30, 30))
 
-    linha_esq = pygame.draw.line(tela, (0, 0, 255), (0, 0), (0, 500), 10)
-    linha_sup = pygame.draw.line(tela, (0, 0, 255), (0, 0), (640, 0), 10)
-    linha_inf = pygame.draw.line(tela, (0, 0, 255), (0, 500), (640, 500), 10)
-    linha_dir = pygame.draw.line(tela, (0, 0, 255), (640, 0), (640, 500), 10)
+    todas_as_sprites.draw(tela)
+    todas_as_sprites.update()
+
+    linha_esq = pygame.draw.line(tela, (0, 0, 255), (0, 0), (0, 650), 20)
+    linha_sup = pygame.draw.line(tela, (0, 0, 255), (0, 0), (1300, 0), 20)
+    linha_inf = pygame.draw.line(tela, (0, 0, 255), (0, 650), (1300, 650), 20)
+    linha_dir = pygame.draw.line(tela, (0, 0, 255), (1300, 0), (1300, 650), 20)
 
     if pacman.colliderect(coin):
         points = points + 1
@@ -83,5 +110,4 @@ while True:
     if pacman.colliderect(linha_inf):
         y_pac = y_pac - 10
 
-    pygame.display.update()
-
+    pygame.display.flip()
