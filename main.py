@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from random import randint
+#from pygame.image import load
 
 pygame.init()
 
@@ -50,10 +51,11 @@ points = 0
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption("Rota de Fuga")
 relogio = pygame.time.Clock()
+#background = load('Imagem_a_ser_colocada.png')
 
 while True:
     relogio.tick(400)
-    tela.fill((0, 0, 0))
+    tela.fill((0, 0, 0)) #substituir tla.fill por tela.blit(background, (0, 0))
     mensagem = f"Pontos: {points}"
     texto = fonte.render(mensagem, True, (255, 255, 255))
 
