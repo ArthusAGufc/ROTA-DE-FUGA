@@ -18,7 +18,7 @@ class Nave(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = 50, 160
 
-    def update(self,*args):
+    def update(self):
         def move_player(self):
             key=pygame.key.get_pressed()
             if key[pygame.K_w]:
@@ -29,25 +29,47 @@ class Nave(pygame.sprite.Sprite):
                 self.rect[0] += Speed
             if key[pygame.K_a]:
                 self.rect[0] -= Speed
-            self.image = pygame.transform.scale(self.image, [309//4,163//4])
+
         move_player(self)
 
-todas_as_sprites= pygame.sprite.Group()
-nave=Nave()
-todas_as_sprites.add(nave)
+class Asteroide(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image=pygame.image.load('Imagens/Asteroide-2.png')
+        self.image=pygame.transform.scale(self.image,(232//2,217//2))
 
+        self.rect=self.image.get_rect()
+        self.rect.topleft= 1000,0
+
+    def update(self):
+        self.rect[0] -= Speed
+        if self.rect[0]<-150:
+            self.rect.topleft = 1000,0
+
+Nave_Sprites= pygame.sprite.Group()
+nave=Nave()
+Nave_Sprites.add(nave)
+
+Asteroide_Sprites= pygame.sprite.Group()
+asteroide=Asteroide()
+Asteroide_Sprites.add(asteroide)
+
+#Iniciando o Pygame
 pygame.init()
 
-pygame.mixer.music.set_volume(0.12)
+#Música de Fundo
+pygame.mixer.music.set_volume(0.15)
 musica=pygame.mixer.music.load('Músicas/Snes.mp3')
 pygame.mixer.music.play(-1)
 
+#Criando Janela
 tela=pygame.display.set_mode((largura,altura))
 pygame.display.set_caption('Rota de Fuga')
 background=pygame.image.load('Imagens/Universo.jpg')
 background=pygame.transform.scale(background,(largura,altura))
 
 clock=pygame.time.Clock()
+
 while True:
     clock.tick(25)
     tela.blit(background, (0, 0))
@@ -55,6 +77,11 @@ while True:
         if event.type==QUIT:
             pygame.quit()
             exit()
-    todas_as_sprites.draw(tela)
-    todas_as_sprites.update()
+
+    Nave_Sprites.draw(tela)
+    Asteroide_Sprites.draw(tela)
+
+    Nave_Sprites.update()
+    Asteroide_Sprites.update()
+
     pygame.display.update()
