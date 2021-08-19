@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from pygame.locals import *
 from sys import exit
 import pygame_menu
@@ -6,6 +6,11 @@ largura= 1000
 altura= 400
 Speed= 10
 Nave_Speed=7
+
+Speed_asteroides = 15
+pipe_largura = 135#largura do pilar
+pipe_altura = 500#altura do pilar
+pipe_espaco = 100#espaço entre os pilares
 
 pygame.init()
 
@@ -188,6 +193,35 @@ def game():
             if self.rect.y>=355:
                 self.rect.y=355
 
+    class Pipe(pygame.sprite.Sprite):# cria 'canos'######
+        
+        def __init__(self, inverted, xpos, ysize):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.image.load('Imagens/pipes.png').convert_alpha()#aloca uma imagem
+            self.image = pygame.transform.scale(self.image,(pipe_largura,pipe_altura))#redimensiona a imagem
+
+            self.rect = self.image.get_rect()#cria uma colisão
+            self.rect[0] = xpos
+
+            if inverted:#se o cano tiver invertido
+                self.image = pygame.transform.flip(self.image, False, True)
+                self.rect[1] = -(self.rect[3] - ysize)
+            else:
+                self.rect[1] = altura - ysize
+            self.mask = pygame.mask.from_surface(self.image)
+
+        def update(self):
+            self.rect[0] -= Speed #velocidade dos canos
+    
+    def is_off_screen(sprite):#se estiver fora da tela
+        return sprite.rect[0] < -(sprite.rect[2])    
+    
+    def get_random_pipes(xpos):#gera canos aleatorios
+        size = random.randint(-25,250)#gera canos de acordo com o valor atribuido
+        pipe = Pipe(False,xpos,size)#pipe normal
+        pipe_inverted = Pipe(True,xpos,altura - size - pipe_espaco)#pipe invertido
+        return (pipe,pipe_inverted)
+  #######          
     #Criando Asteroides
     class Obstaculo(pygame.sprite.Sprite):
         def __init__(self):
@@ -245,6 +279,12 @@ def game():
             self.rect[0] -= Speed
             if self.rect[0]<-150:
                 self.rect.topleft = 1500,300
+    
+    def exibe_msg(msg, tamanho, cor):#score do jogo
+        fonte = pygame.font.SysFont('comicsanssms', tamanho, True, False)
+        mensagem = f'Score:{msg}'
+        texto_limpo = fonte.render(mensagem, True, cor)
+        return texto_limpo
 
     Nave_Sprites= pygame.sprite.Group()
     nave=Nave()
@@ -257,6 +297,12 @@ def game():
     Obstaculo_Sprites.add(Obstaculo())
     Obstaculo_Sprites.add(Obstaculo2())
     Obstaculo_Sprites.add(Obstaculo3())
+    
+    pipe_group = pygame.sprite.Group()#Grupo de canos
+    for i in range(2):#gerar 2 canos por vez
+        pipes = get_random_pipes(largura * i + 1000)
+        pipe_group.add(pipes[0])
+        pipe_group.add(pipes[1])
 
     #Música de Fundo
     pygame.mixer.music.set_volume(0.1)
@@ -267,6 +313,7 @@ def game():
     fonte_pontos=pygame.font.SysFont('arial', 30, True, True)
     fonte_perdeu=pygame.font.SysFont('arial', 50, True, True)
     pontos=0
+    score=0
 
     #Criando Janela
     tela=pygame.display.set_mode((largura,altura))
@@ -296,6 +343,7 @@ def game():
         Mensagem= 'Game Over'
         texto_perdeu= fonte_perdeu.render(Mensagem, True, (0, 0, 0))
         texto_formatado = fonte_pontos.render(mensagem, True, (255, 255, 255))
+        texto_score = exibe_msg(score, 40, (255, 255, 255))#mesagem de score
 
         for event in pygame.event.get():
             if event.type== QUIT:
@@ -311,27 +359,47 @@ def game():
                 elif event.key== K_q:
                     pygame.quit()
                     quit()
+        
+        if is_off_screen(pipe_group.sprites()[0]): # se estiver fora da tela
+            pipe_group.remove(pipe_group.sprites()[0])#vai remover os canos fora da tela
+            pipe_group.remove(pipe_group.sprites()[0])
+
+            pipes = get_random_pipes(largura * 1.15) #vai gerar novos canos
+            pipe_group.add(pipes[0])
+            pipe_group.add(pipes[1])
 
         tela.blit(texto_formatado, (830, 0))
+        
         colisoes=pygame.sprite.spritecollide(nave,Obstaculo_Sprites,False,pygame.sprite.collide_mask)
         colisoes2=pygame.sprite.spritecollide(nave,Moeda_Sprites,pygame.sprite.collide_rect)
+        colisoes3 = pygame.sprite.spritecollide(nave,pipe_group,False,pygame.sprite.collide_mask)
+        
+        pipe_group.draw(tela)
         Nave_Sprites.draw(tela)
         Obstaculo_Sprites.draw(tela)
         Moeda_Sprites.draw(tela)
 
-        if colisoes:
+        if colisoes or colisoes3:
             pass
             pygame.mixer.music.load('Músicas/Snes.mp3')
             pygame.mixer.pause()
             tela.blit(texto_perdeu, (400, 175))
         else:
-            Nave_Sprites.update()
-            Obstaculo_Sprites.update()
-            Moeda_Sprites.update()
+            if score <= 280:#se o score for menor que 2800 continua vindo asteroide
+                Obstaculo_group.update()
+                if score >= 280:#Se score for maior ou igual a 2800: remove os asteroides
+                    Obstaculo_group.remove(Obstaculo_group)
+            else:
+                pipe_group.update()
+         
+        Nave_Sprites.update()
+        Moeda_Sprites.update()
+        score += 1   
 
         if colisoes2:
             pontos=pontos+1
-
+        
+        tela.blit(texto_score, (0, 0))  # colocar a mensagem score na tela
         pygame.display.update()
 
 menu()
