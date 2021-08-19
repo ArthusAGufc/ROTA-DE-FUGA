@@ -121,8 +121,18 @@ def menu():
 
     tela = pygame.display.set_mode((1000, 400))
     pygame.display.set_caption('Rota de Fuga')
-
-    menu = pygame_menu.Menu('Rota de Fuga', 1000, 400,theme=pygame_menu.themes.THEME_DARK)
+    
+    font = pygame_menu.font.FONT_8BIT
+    mybackground = pygame_menu.baseimage.BaseImage(image_path='Imagens/Fundo.jpg',
+    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+    mytheme = pygame_menu.themes.THEME_DARK.copy()
+    mytheme.widget_font=font
+    mytheme.background_color=mybackground
+    mytheme.title_font_shadow=True
+    mytheme.widget_padding=8
+    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
+    
+    menu = pygame_menu.Menu(title='Rota de Fuga',width=1000,height=400,theme=mytheme)
 
     menu.add.button('História',historia)
     menu.add.button('Iniciar', game)
