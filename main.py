@@ -1,16 +1,12 @@
-import pygame, random
+import pygame
 from pygame.locals import *
-from sys import exit
 import pygame_menu
+from random import randrange
+
 largura= 1000
 altura= 400
-Speed= 10
-Nave_Speed=7
-
-Speed_asteroides = 15
-pipe_largura = 135#largura do pilar
-pipe_altura = 500#altura do pilar
-pipe_espaco = 100#espaço entre os pilares
+Obstaculos_Speed= 13
+Nave_Speed=8
 
 pygame.init()
 
@@ -19,7 +15,7 @@ def controles():
     #Criação da Janela
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption('Rota de Fuga')
-    background = pygame.image.load('Imagens/Mapa.jpg')
+    background = pygame.image.load('Imagens/Mapa-2.jpg')
     background = pygame.transform.scale(background, (largura, altura))
 
     retangulo=pygame.image.load('Imagens/retangulo.png')
@@ -28,7 +24,6 @@ def controles():
     #Texto
     Fonte_Controles = pygame.font.SysFont('arial', 50, True, True)
     Fonte_Texto = pygame.font.SysFont('arial', 20, True, True)
-    Fonte_Tecla = pygame.font.SysFont('arial', 20, True, True)
 
     while True:
         #Imagens
@@ -77,7 +72,7 @@ def controles():
         for event in pygame.event.get():
             if event.type== QUIT:
                 pygame.quit()
-                exit()
+                quit()
             if event.type==KEYDOWN:
                 if event.key==K_BACKSPACE:
                     menu()
@@ -86,20 +81,193 @@ def controles():
 
 def historia():
 
+    # Música
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.load('Músicas/StarWars.mp3')
+    pygame.mixer.music.play(2)
+
+    #História
+    class Historia1(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-1.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,0
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia2(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-2.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,400
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia3(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-3.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,900
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia4(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/PeterCaleb-1.png')
+            self.image=pygame.transform.scale(self.image,(500,500//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 250,1300
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia5(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-4.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,1700
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia6(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Darktrol.jpg')
+            self.image=pygame.transform.scale(self.image,(500,500//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 250,2100
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia7(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-5.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,2300
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia8(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Joe Trump.png')
+            self.image=pygame.transform.scale(self.image,(500,500//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 250,2700
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia9(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-6.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,3000
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia10(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Guerra-1.png')
+            self.image=pygame.transform.scale(self.image,(500,500//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 250,3400
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia11(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Guerra-2.png')
+            self.image=pygame.transform.scale(self.image,(500,500//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 250,3700
+
+        def update(self):
+            self.rect[1] -= 1
+
+    class Historia12(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/História-7.png')
+            self.image=pygame.transform.scale(self.image,(largura,altura))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 0,4000
+
+        def update(self):
+            self.rect[1] -= 1
+
+    #Sprites
+    Historia_Sprites= pygame.sprite.Group()
+    Historia_Sprites.add(Historia1())
+    Historia_Sprites.add(Historia2())
+    Historia_Sprites.add(Historia3())
+    Historia_Sprites.add(Historia4())
+    Historia_Sprites.add(Historia5())
+    Historia_Sprites.add(Historia6())
+    Historia_Sprites.add(Historia7())
+    Historia_Sprites.add(Historia8())
+    Historia_Sprites.add(Historia9())
+    Historia_Sprites.add(Historia10())
+    Historia_Sprites.add(Historia11())
+    Historia_Sprites.add(Historia12())
+
+    #Janela
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption('Rota de Fuga')
-    background = pygame.image.load('Imagens/Mapa.jpg')
+    background = pygame.image.load('Imagens/Mapa-2.jpg')
     background = pygame.transform.scale(background, (largura, altura))
+    clock=pygame.time.Clock()
 
     while True:
+        clock.tick(30)
         tela.blit(background, (0, 0))
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                exit()
+                quit()
             if event.type == KEYDOWN:
                 if event.key == K_BACKSPACE:
+                    pygame.mixer.music.load('Músicas/StarWars.mp3')
+                    pygame.mixer.music.pause()
                     menu()
+
+        Historia_Sprites.draw(tela)
+        Historia_Sprites.update()
 
         pygame.display.update()
 
@@ -107,44 +275,86 @@ def creditos():
 
     tela = pygame.display.set_mode((largura, altura))
     pygame.display.set_caption('Rota de Fuga')
-    background = pygame.image.load('Imagens/Mapa.jpg')
+    background = pygame.image.load('Imagens/Mapa-2.jpg')
     background = pygame.transform.scale(background, (largura, altura))
+
+    class ShadowDemons(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Shadow Demons.png')
+            self.image=pygame.transform.scale(self.image,(550,550))
+
+            self.rect=self.image.get_rect()
+            self.rect.topleft= 900,-50
+
+        def update(self):
+            self.rect[0] -= 1
+            if self.rect.x<=500:
+                self.rect.x=500
+
+    ShadowDemons_Sprites=pygame.sprite.Group()
+    ShadowDemons_Sprites.add(ShadowDemons())
+
+    #Fonte
+    Fonte_Creditos = pygame.font.SysFont('arial',40,True,True)
+    Fonte_Integrantes = pygame.font.SysFont('arial', 25, True, True)
 
     while True:
         tela.blit(background, (0, 0))
+
+        #Texto
+        Texto_Creditos=Fonte_Creditos.render('Créditos',True,(255,255,255))
+        Texto_Integrante1 = Fonte_Integrantes.render('ARTHUS ALMEIDA GIRAO', True, (255, 255, 255))
+        Texto_Integrante2 = Fonte_Integrantes.render('GABRIEL NOVAIS LIMA', True, (255, 255, 255))
+        Texto_Integrante3 = Fonte_Integrantes.render('KAUAN DEYVID BEZERRA DE SOUSA', True, (255, 255, 255))
+        Texto_Integrante4 = Fonte_Integrantes.render('MARCOS GABRIEL DE MESQUITA MAURICIO', True, (255, 255, 255))
+        Texto_Integrante5 = Fonte_Integrantes.render('PAULO HENRIQUE DA SILVA HOLANDA', True, (255, 255, 255))
+        Texto_Integrante6 = Fonte_Integrantes.render('Orientador: Rafael Ivo', True, (255, 255, 255))
+        Texto_Equipe = Fonte_Creditos.render('Shadow Demons', True, (255, 255, 255))
+
+        #Imagem
+        tela.blit(Texto_Creditos, (200, 0))
+        tela.blit(Texto_Integrante1, (120, 50))
+        tela.blit(Texto_Integrante2, (130, 100))
+        tela.blit(Texto_Integrante3, (50, 150))
+        tela.blit(Texto_Integrante4, (10, 200))
+        tela.blit(Texto_Integrante5, (50, 250))
+        tela.blit(Texto_Integrante6, (130, 300))
+        tela.blit(Texto_Equipe, (600, 300))
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                exit()
+                quit()
             if event.type == KEYDOWN:
                 if event.key == K_BACKSPACE:
                     menu()
 
+        ShadowDemons_Sprites.draw(tela)
+        ShadowDemons_Sprites.update()
+
         pygame.display.update()
 
-def menu():
-
+def github():
     tela = pygame.display.set_mode((1000, 400))
     pygame.display.set_caption('Rota de Fuga')
-    
-    font = pygame_menu.font.FONT_8BIT
-    mybackground = pygame_menu.baseimage.BaseImage(image_path='Imagens/Fundo.jpg',
-    drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-    mytheme = pygame_menu.themes.THEME_DARK.copy()
-    mytheme.widget_font=font
-    mytheme.background_color=mybackground
-    mytheme.title_font_shadow=True
-    mytheme.widget_padding=8
-    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
-    
-    menu = pygame_menu.Menu(title='Rota de Fuga',width=1000,height=400,theme=mytheme)
 
-    menu.add.button('História',historia)
-    menu.add.button('Iniciar', game)
-    menu.add.button('Controles',controles)
-    menu.add.button('Créditos',creditos)
-    menu.add.button('Sair', pygame_menu.events.EXIT)
-    menu.mainloop(tela)
+    font = pygame_menu.font.FONT_NEVIS
+    mybackground = pygame_menu.baseimage.BaseImage(image_path='Imagens/Mapa-2.jpg',
+                                                   drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+    mytheme = pygame_menu.themes.THEME_DARK.copy()
+    mytheme.widget_font = font
+    mytheme.background_color = mybackground
+    mytheme.title_font_shadow = True
+    mytheme.widget_padding = 8
+    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
+
+    GitHub = pygame_menu.Menu(title='Rota de Fuga', width=1000, height=400, theme=mytheme)
+
+    GitHub.add.url('https://github.com/ArthusAGufc/ROTA-DE-FUGA',font_color=pygame.Color(255,255,255))
+    GitHub.add.url('https://github.com/ArthusAGufc/ROTA-DE-FUGA', 'Rota de Fuga Documentation',font_color=pygame.Color(255,255,255))
+    GitHub.add.button('Sair',menu)
+    GitHub.mainloop(tela)
 
 def game():
     #Criando Nave
@@ -170,7 +380,6 @@ def game():
             self.image = self.sprites[self.atual]
             self.image = pygame.transform.scale(self.image, (5253 // 60, 2771 // 60))
 
-
             def move_player(self):
                 key=pygame.key.get_pressed()
                 if key[pygame.K_w]:
@@ -192,36 +401,10 @@ def game():
                 self.rect.y=0
             if self.rect.y>=355:
                 self.rect.y=355
+    Nave_Sprites = pygame.sprite.Group()
+    nave = Nave()
+    Nave_Sprites.add(nave)
 
-    class Pipe(pygame.sprite.Sprite):# cria 'canos'######
-        
-        def __init__(self, inverted, xpos, ysize):
-            pygame.sprite.Sprite.__init__(self)
-            self.image = pygame.image.load('Imagens/pipes.png').convert_alpha()#aloca uma imagem
-            self.image = pygame.transform.scale(self.image,(pipe_largura,pipe_altura))#redimensiona a imagem
-
-            self.rect = self.image.get_rect()#cria uma colisão
-            self.rect[0] = xpos
-
-            if inverted:#se o cano tiver invertido
-                self.image = pygame.transform.flip(self.image, False, True)
-                self.rect[1] = -(self.rect[3] - ysize)
-            else:
-                self.rect[1] = altura - ysize
-            self.mask = pygame.mask.from_surface(self.image)
-
-        def update(self):
-            self.rect[0] -= Speed #velocidade dos canos
-    
-    def is_off_screen(sprite):#se estiver fora da tela
-        return sprite.rect[0] < -(sprite.rect[2])    
-    
-    def get_random_pipes(xpos):#gera canos aleatorios
-        size = random.randint(-25,250)#gera canos de acordo com o valor atribuido
-        pipe = Pipe(False,xpos,size)#pipe normal
-        pipe_inverted = Pipe(True,xpos,altura - size - pipe_espaco)#pipe invertido
-        return (pipe,pipe_inverted)
-  #######          
     #Criando Asteroides
     class Obstaculo(pygame.sprite.Sprite):
         def __init__(self):
@@ -230,97 +413,155 @@ def game():
             self.image=pygame.transform.scale(self.image,(232//2,217//2))
 
             self.rect=self.image.get_rect()
-            self.rect.topleft= 1000,0
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
 
         def update(self):
-            self.rect[0] -= Speed
-            if self.rect[0]<-150:
-                self.rect.topleft = 1000,0
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
 
-    class Obstaculo2(pygame.sprite.Sprite):
+    Asteroides_Sprites = pygame.sprite.Group()
+    for i in range(3):
+        Asteroides_Sprites.add(Obstaculo())
+
+    #Criando Satellite
+    class Satellite(pygame.sprite.Sprite):
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
-            self.image=pygame.image.load('Imagens/Asteroide-2.png')
+            self.image=pygame.image.load('Imagens/Satellite.png')
             self.image=pygame.transform.scale(self.image,(232//2,217//2))
 
             self.rect=self.image.get_rect()
-            self.rect.topleft= 1200,150
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
 
         def update(self):
-            self.rect[0] -= Speed
-            if self.rect[0]<-150:
-                self.rect.topleft = 1200,150
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
 
-    class Obstaculo3(pygame.sprite.Sprite):
+    Satellite_Sprites = pygame.sprite.Group()
+    for i in range(4):
+        Satellite_Sprites.add(Satellite())
+
+    #Criando Planetas
+    class Planeta1(pygame.sprite.Sprite):
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
-            self.image=pygame.image.load('Imagens/Asteroide-2.png')
+            self.image=pygame.image.load('Imagens/Mercurio.png')
+            self.image=pygame.transform.scale(self.image,(232//2,217//3))
+
+            self.rect=self.image.get_rect()
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
+
+        def update(self):
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
+
+    class Planeta2(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Saturno.png')
             self.image=pygame.transform.scale(self.image,(232//2,217//2))
 
             self.rect=self.image.get_rect()
-            self.rect.topleft= 1100,300
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
 
         def update(self):
-            self.rect[0] -= Speed
-            if self.rect[0]<-150:
-                self.rect.topleft = 1100,300
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
+
+    class Planeta3(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Terra.png')
+            self.image=pygame.transform.scale(self.image,(232//2,217//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
+
+        def update(self):
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
+
+    class Planeta4(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image=pygame.image.load('Imagens/Netuno.png')
+            self.image=pygame.transform.scale(self.image,(232//2,217//2))
+
+            self.rect=self.image.get_rect()
+            self.rect.y=randrange(0,400,100)
+            self.rect.x=largura+randrange(0,1200,400)
+
+        def update(self):
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0]<-100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x=largura+randrange(0,1200,400)
+
+
+    Planetas_Sprites= pygame.sprite.Group()
+    Planetas_Sprites.add(Planeta1())
+    Planetas_Sprites.add(Planeta2())
+    Planetas_Sprites.add(Planeta3())
+    Planetas_Sprites.add(Planeta4())
 
     #Criando Moeda
     class Moeda(pygame.sprite.Sprite):
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
-            self.image = pygame.image.load('Imagens/Moeda.png')
-            self.image = pygame.transform.scale(self.image, (555 // 8, 449 // 8))
+            self.image = pygame.image.load('Imagens/Fup_coin_1.png')
+            self.image = pygame.transform.scale(self.image, (136 // 3, 123 // 3))
 
             self.rect = self.image.get_rect()
-            self.rect.topleft = 1500, 300
+            self.rect.y = randrange(0, 400, 100)
+            self.rect.x = largura + randrange(0, 400, 100)
 
         def update(self):
-            self.rect[0] -= Speed
-            if self.rect[0]<-150:
-                self.rect.topleft = 1500,300
-    
-    def exibe_msg(msg, tamanho, cor):#score do jogo
-        fonte = pygame.font.SysFont('comicsanssms', tamanho, True, False)
-        mensagem = f'Score:{msg}'
-        texto_limpo = fonte.render(mensagem, True, cor)
-        return texto_limpo
-
-    Nave_Sprites= pygame.sprite.Group()
-    nave=Nave()
-    Nave_Sprites.add(nave)
+            self.rect[0] -= Obstaculos_Speed
+            if self.rect[0] < -100:
+                self.rect.y = randrange(0, 400, 100)
+                self.rect.x = largura + randrange(0, 400, 100)
 
     Moeda_Sprites=pygame.sprite.Group()
-    Moeda_Sprites.add(Moeda())
-
-    Obstaculo_Sprites= pygame.sprite.Group()
-    Obstaculo_Sprites.add(Obstaculo())
-    Obstaculo_Sprites.add(Obstaculo2())
-    Obstaculo_Sprites.add(Obstaculo3())
-    
-    pipe_group = pygame.sprite.Group()#Grupo de canos
-    for i in range(2):#gerar 2 canos por vez
-        pipes = get_random_pipes(largura * i + 1000)
-        pipe_group.add(pipes[0])
-        pipe_group.add(pipes[1])
+    for i in range(3):
+        Moeda_Sprites.add(Moeda())
 
     #Música de Fundo
-    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.load('Músicas/Snes.mp3')
     pygame.mixer.music.play(-1)
+    Coin=pygame.mixer.Sound('Músicas/Coin.mp3')
+    Coin.set_volume(0.1)
 
     #Texto
-    fonte_pontos=pygame.font.SysFont('arial', 30, True, True)
-    fonte_perdeu=pygame.font.SysFont('arial', 50, True, True)
-    pontos=0
+    Fonte_Texto1=pygame.font.SysFont('arial', 30, True, True)
+    Fonte_Texto2=pygame.font.SysFont('arial', 50, True, True)
+
+    #Pontuação
+    coin=0
+    maxcoin=0
     score=0
+    highscore=0
 
     #Criando Janela
     tela=pygame.display.set_mode((largura,altura))
     pygame.display.set_caption('Rota de Fuga')
-    background= pygame.image.load('Imagens/Mapa.jpg')
+    background= pygame.image.load('Imagens/Mapa-2.jpg')
     background= pygame.transform.scale(background,(largura,altura))
-
     clock= pygame.time.Clock()
 
     def pause():
@@ -334,72 +575,119 @@ def game():
                     if event.key== pygame.K_p:
                         paused=False
 
-    while True:
+    while pause:
         nave.movimento()
         clock.tick(80)
         tela.blit(background, (0, 0))
 
-        mensagem= f'Pontos: {pontos}'
-        Mensagem= 'Game Over'
-        texto_perdeu= fonte_perdeu.render(Mensagem, True, (0, 0, 0))
-        texto_formatado = fonte_pontos.render(mensagem, True, (255, 255, 255))
-        texto_score = exibe_msg(score, 40, (255, 255, 255))#mesagem de score
+        Texto_Perdeu= Fonte_Texto2.render('Game Over', True, (204, 50, 50))
+        Texto_Coin = Fonte_Texto1.render(f'Coin: {coin}', True, (255, 255, 255))
+        Texto_MaxCoin = Fonte_Texto1.render(f'MaxCoin: {maxcoin}', True, (255, 255, 255))
+        Texto_Score = Fonte_Texto1.render(f'Score: {score}', True, (255, 255, 255))
+        Texto_HighScore = Fonte_Texto1.render(f'HighScore: {highscore}', True, (255, 255, 255))
 
         for event in pygame.event.get():
             if event.type== QUIT:
                 pygame.quit()
-                exit()
+                quit()
             if event.type==KEYDOWN:
                 if event.key== K_p:
                     pause()
-                if event.key == K_BACKSPACE:
+                elif event.key == K_BACKSPACE:
                     pygame.mixer.music.load('Músicas/Snes.mp3')
                     pygame.mixer.pause()
                     menu()
                 elif event.key== K_q:
                     pygame.quit()
                     quit()
-        
-        if is_off_screen(pipe_group.sprites()[0]): # se estiver fora da tela
-            pipe_group.remove(pipe_group.sprites()[0])#vai remover os canos fora da tela
-            pipe_group.remove(pipe_group.sprites()[0])
 
-            pipes = get_random_pipes(largura * 1.15) #vai gerar novos canos
-            pipe_group.add(pipes[0])
-            pipe_group.add(pipes[1])
+        colisoes=pygame.sprite.spritecollide(nave, Asteroides_Sprites, False, pygame.sprite.collide_mask)
+        colisoes2 = pygame.sprite.spritecollide(nave, Satellite_Sprites, False, pygame.sprite.collide_mask)
+        colisoes3 = pygame.sprite.spritecollide(nave, Planetas_Sprites, False, pygame.sprite.collide_mask)
+        colisoes4 = pygame.sprite.spritecollide(nave, Moeda_Sprites, bool(pygame.sprite.collide_rect))
 
-        tela.blit(texto_formatado, (830, 0))
-        
-        colisoes=pygame.sprite.spritecollide(nave,Obstaculo_Sprites,False,pygame.sprite.collide_mask)
-        colisoes2=pygame.sprite.spritecollide(nave,Moeda_Sprites,pygame.sprite.collide_rect)
-        colisoes3 = pygame.sprite.spritecollide(nave,pipe_group,False,pygame.sprite.collide_mask)
-        
-        pipe_group.draw(tela)
         Nave_Sprites.draw(tela)
-        Obstaculo_Sprites.draw(tela)
+        Asteroides_Sprites.draw(tela)
         Moeda_Sprites.draw(tela)
+        Satellite_Sprites.draw(tela)
+        Planetas_Sprites.draw(tela)
 
-        if colisoes or colisoes3:
-            pass
+        if colisoes or colisoes2 or colisoes3:
             pygame.mixer.music.load('Músicas/Snes.mp3')
-            pygame.mixer.pause()
-            tela.blit(texto_perdeu, (400, 175))
-        else:
-            if score <= 280:#se o score for menor que 2800 continua vindo asteroide
-                Obstaculo_group.update()
-                if score >= 280:#Se score for maior ou igual a 2800: remove os asteroides
-                    Obstaculo_group.remove(Obstaculo_group)
-            else:
-                pipe_group.update()
-         
-        Nave_Sprites.update()
-        Moeda_Sprites.update()
-        score += 1   
+            pygame.mixer.music.stop()
+            tela.blit(Texto_Perdeu, (400, 175))
 
-        if colisoes2:
-            pontos=pontos+1
-        
-        tela.blit(texto_score, (0, 0))  # colocar a mensagem score na tela
+        else:
+            if score<=2000:
+                Asteroides_Sprites.update()
+            if score>=2000:
+                Asteroides_Sprites.remove(Asteroides_Sprites)
+                Satellite_Sprites.update()
+            if score>=4000:
+                Satellite_Sprites.remove(Satellite_Sprites)
+                Planetas_Sprites.update()
+
+            Nave_Sprites.update()
+            Moeda_Sprites.update()
+            score += 1
+
+        if colisoes4:
+            Coin.play()
+            coin=coin+1
+            Moeda_Sprites.add(Moeda())
+
+        #Pontuação
+        tela.blit(Texto_Coin, (570, 0))
+        tela.blit(Texto_MaxCoin, (820, 0))
+        tela.blit(Texto_Score,(0,0))
+        tela.blit(Texto_HighScore, (200, 0))
+
+        #Arquivo Moeda
+        file = open('maxcoin.txt', 'r')
+        maxcoin=file.read()
+
+        if coin>int(maxcoin):
+            maxcoin=coin
+
+        file=open('maxcoin.txt','w')
+        file.write(f'{maxcoin}')
+        file.close()
+
+        #Arquivo Pontuação
+        file = open('highscore.txt', 'r')
+        highscore = file.read()
+
+        if score > int(highscore):
+            highscore = score
+
+        file = open('highscore.txt', 'w')
+        file.write(f'{highscore}')
+        file.close()
+
         pygame.display.update()
+
+def menu():
+    tela = pygame.display.set_mode((1000, 400))
+    pygame.display.set_caption('Rota de Fuga')
+
+    font = pygame_menu.font.FONT_8BIT
+    mybackground = pygame_menu.baseimage.BaseImage(image_path='Imagens/Mapa-2.jpg',
+                                                   drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+    mytheme = pygame_menu.themes.THEME_DARK.copy()
+    mytheme.widget_font = font
+    mytheme.background_color = mybackground
+    mytheme.title_font_shadow = True
+    mytheme.widget_padding = 8
+    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
+
+    menu = pygame_menu.Menu(title='Rota de Fuga', width=1000, height=400, theme=mytheme)
+    menu.add.button('Historia', historia)
+    menu.add.button('Iniciar', game)
+    menu.add.button('Controles', controles)
+    menu.add.button('Creditos', creditos)
+    menu.add.button('GitHub',github)
+    menu.add.button('Sair', pygame_menu.events.EXIT)
+    menu.add.clock(font_size=25, font_name=pygame_menu.font.FONT_DIGITAL)
+    menu.mainloop(tela)
 
 menu()
