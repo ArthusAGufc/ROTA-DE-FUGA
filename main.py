@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from pipes import *
 import pygame_menu
 from random import randrange
 
