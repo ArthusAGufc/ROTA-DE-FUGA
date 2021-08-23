@@ -404,6 +404,15 @@ def game():
     Nave_Sprites = pygame.sprite.Group()
     nave = Nave()
     Nave_Sprites.add(nave)
+    
+    def is_off_screen(sprite):#se estiver fora da tela
+        return sprite.rect[0] < -(sprite.rect[2])
+
+    def get_random_pipes(xpos):#gera canos aleatorios
+        size = random.randint(-25,310)#gera canos de acordo com o valor atribuido
+        pipe = Pipe(False,xpos,size)#pipe normal
+        pipe_inverted = Pipe(True,xpos,altura - size - pipe_espaco)#pipe invertido
+        return (pipe,pipe_inverted)
 
     #Criando Asteroides
     class Obstaculo(pygame.sprite.Sprite):
@@ -539,6 +548,12 @@ def game():
     Moeda_Sprites=pygame.sprite.Group()
     for i in range(3):
         Moeda_Sprites.add(Moeda())
+    
+    pipe_group = pygame.sprite.Group()#Grupo de canos
+    for i in range(2):#gerar 2 canos por vez
+        pipes = get_random_pipes(largura * i + 1000)
+        pipe_group.add(pipes[0])
+        pipe_group.add(pipes[1])
 
     #Música de Fundo
     pygame.mixer.music.set_volume(0.5)
@@ -600,19 +615,29 @@ def game():
                 elif event.key== K_q:
                     pygame.quit()
                     quit()
+        
+        if is_off_screen(pipe_group.sprites()[0]): # se estiver fora da tela
+            pipe_group.remove(pipe_group.sprites()[0])#vai remover os canos fora da tela
+            pipe_group.remove(pipe_group.sprites()[0])
 
+            pipes = get_random_pipes(largura * 1.15) #vai gerar novos canos
+            pipe_group.add(pipes[0])
+            pipe_group.add(pipes[1])
+        
         colisoes=pygame.sprite.spritecollide(nave, Asteroides_Sprites, False, pygame.sprite.collide_mask)
         colisoes2 = pygame.sprite.spritecollide(nave, Satellite_Sprites, False, pygame.sprite.collide_mask)
         colisoes3 = pygame.sprite.spritecollide(nave, Planetas_Sprites, False, pygame.sprite.collide_mask)
         colisoes4 = pygame.sprite.spritecollide(nave, Moeda_Sprites, bool(pygame.sprite.collide_rect))
+        colisoes5 = pygame.sprite.spritecollide(nave,pipe_group,False,pygame.sprite.collide_mask)
 
         Nave_Sprites.draw(tela)
         Asteroides_Sprites.draw(tela)
         Moeda_Sprites.draw(tela)
         Satellite_Sprites.draw(tela)
         Planetas_Sprites.draw(tela)
+        pipe_group.draw(tela)
 
-        if colisoes or colisoes2 or colisoes3:
+        if colisoes or colisoes2 or colisoes3 or colisoes5:
             pygame.mixer.music.load('Músicas/Snes.mp3')
             pygame.mixer.music.stop()
             tela.blit(Texto_Perdeu, (400, 175))
@@ -626,6 +651,10 @@ def game():
             if score>=4000:
                 Satellite_Sprites.remove(Satellite_Sprites)
                 Planetas_Sprites.update()
+            if score>=5000:
+                Planetas_Sprites.remove(Planetas_Sprites)
+                pipe_group.update()
+            
 
             Nave_Sprites.update()
             Moeda_Sprites.update()
