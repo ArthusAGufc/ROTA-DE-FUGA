@@ -640,6 +640,9 @@ def game():
             pygame.mixer.music.load('Músicas/Snes.mp3')
             pygame.mixer.music.stop()
             tela.blit(Texto_Perdeu, (400, 175))
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN:
+                    game()
 
         else:
             if score <= 500:
