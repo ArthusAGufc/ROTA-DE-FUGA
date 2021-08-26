@@ -390,7 +390,7 @@ def loja():
         #print(pos)
         #print(click)
 
-        if 373 >= pos[1] >= 351 and 276 >= pos[0] >= 26: #nave preta
+        if 373 >= pos[1] >= 351 and 276 >= pos[0] >= 26: #nave preta (botem mais uma condição tipo: 'and  moedas >= 100')
             if click[0] == 1:
                 sprites.clear()
                 sprites.append(pygame.image.load('Imagens/sprite_1.1.png'))
