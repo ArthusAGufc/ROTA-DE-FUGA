@@ -426,6 +426,12 @@ def loja():
                 sprites.append(pygame.image.load('Imagens/CaçaBranco_0.png'))
                 sprites.append(pygame.image.load('Imagens/CaçaBranco_1.png'))
                 sprites.append(pygame.image.load('Imagens/CaçaBranco_2.png'))
+                
+        Fonte_Texto = pygame.font.SysFont('arial', 20, True, True)
+        Texto_Moedas = Fonte_Texto.render(f'Moedas:{moedas}', True, (255, 255, 255))
+        tela.blit(Texto_Moedas,(880,0))
+        Texto_Voltar = Fonte_Texto.render('Pressione backspace para voltar',True,(255,255,255))
+        tela.blit(Texto_Voltar,(0,0))
 
         for event in pygame.event.get():
             if event.type == QUIT:
