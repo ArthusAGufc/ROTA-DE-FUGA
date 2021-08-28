@@ -360,7 +360,28 @@ def github():
 
 def loja():
     tela = pygame.display.set_mode((1000, 400))
-    pygame.display.set_caption('Loja')
+    pygame.display.set_caption('Rota de Fuga')
+
+    font = pygame_menu.font.FONT_8BIT
+    mybackground = pygame_menu.baseimage.BaseImage(image_path='Imagens/Mapa-2.jpg',
+                                                   drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+    mytheme = pygame_menu.themes.THEME_DARK.copy()
+    mytheme.widget_font = font
+    mytheme.background_color = mybackground
+    mytheme.title_font_shadow = True
+    mytheme.widget_padding = 8
+    mytheme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_UNDERLINE_TITLE
+
+    Loja = pygame_menu.Menu(title='Loja', width=1000, height=400, theme=mytheme)
+
+    Loja.add.button('Naves Terra', Naves1)
+    Loja.add.button('Naves Dark', Naves2)
+    Loja.add.button('Sair', menu)
+    Loja.mainloop(tela)
+
+def Naves1():
+    tela = pygame.display.set_mode((1000, 400))
+    pygame.display.set_caption('Rota de Fuga')
     fundo_da_loja = pygame.image.load('fundo da loja/fundo loja1.png')
     fundo_da_loja2 = pygame.image.load('fundo da loja/fundo loja2.png')
     fundo_da_loja3 = pygame.image.load('fundo da loja/fundo loja3.png')
@@ -433,7 +454,89 @@ def loja():
                 quit()
             if event.type == KEYDOWN:
                 if event.key == K_BACKSPACE:
-                    menu()
+                    loja()
+
+        tela.blit(Texto_MaxCoin, (750, 0))
+        tela.blit(Texto_Voltar, (0, 0))
+
+        pygame.display.update()
+
+def Naves2():
+    tela = pygame.display.set_mode((1000, 400))
+    pygame.display.set_caption('Rota de Fuga')
+    fundo_da_loja = pygame.image.load('fundo da loja/fundo loja1.png')
+    fundo_da_loja2 = pygame.image.load('fundo da loja/fundo loja2.png')
+    fundo_da_loja3 = pygame.image.load('fundo da loja/fundo loja3.png')
+    fundo_da_loja4 = pygame.image.load('fundo da loja/fundo loja4.png')
+    fundo_da_loja5 = pygame.image.load('fundo da loja/fundo loja5.png')
+    fundo_da_loja6 = pygame.image.load('fundo da loja/fundo loja6.png')
+    Fonte_Texto1 = pygame.font.SysFont('arial', 30, True, True)
+    file = open('maxcoin.txt', 'r')
+    maxcoin = file.read()
+
+    while True:
+        Texto_MaxCoin = Fonte_Texto1.render(f'Moedas: {maxcoin}', True, (255, 255, 255))
+        Texto_Voltar = Fonte_Texto1.render(f'Pressione Backspace Para Voltar', True, (255, 255, 255))
+        pos = pygame.mouse.get_pos()  # indentifica a posição do mouse dentro da loja
+        click = pygame.mouse.get_pressed()  # indentifica quando o mause pressionado
+
+        if int(maxcoin) < 100:
+            tela.blit(fundo_da_loja, (0, 0))
+        elif int(maxcoin)< 250:
+            tela.blit(fundo_da_loja2, (0, 0))
+        elif int(maxcoin) < 375:
+            tela.blit(fundo_da_loja3, (0, 0))
+        elif int(maxcoin) < 425:
+            tela.blit(fundo_da_loja4, (0, 0))
+        elif int(maxcoin) < 500:
+            tela.blit(fundo_da_loja5, (0, 0))
+        else:
+            tela.blit(fundo_da_loja6, (0, 0))
+
+        if 373 >= pos[1] >= 351 and 276 >= pos[0] >= 26 and int(maxcoin)>=100: # nave preta
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/sprite_1.1.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_1.2.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_1.3.png'))
+        elif 373 >= pos[1] >= 351 and 627 >= pos[0] >= 378 and int(maxcoin)>=375: # nave azul
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/NaveAzul_0.png'))
+                sprites.append(pygame.image.load('Imagens/NaveAzul_1.png'))
+                sprites.append(pygame.image.load('Imagens/NaveAzul_2.png'))
+        elif 373 >= pos[1] >= 351 and 970 >= pos[0] >= 721 and int(maxcoin)>=500: # nave presidente
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/Nave_Presidente0.png'))
+                sprites.append(pygame.image.load('Imagens/Nave_Presidente1.png'))
+                sprites.append(pygame.image.load('Imagens/Nave_Presidente2.png'))
+        elif 184 >= pos[1] >= 159 and 276 >= pos[0] >= 26 and int(maxcoin)<100:  # nave Fup
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/sprite_0.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_1.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_2.png'))
+        elif 184 >= pos[1] >= 159 and 627 >= pos[0] >= 378 and int(maxcoin)>=250: # nave vermelha
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/sprite_2.1.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_2.2.png'))
+                sprites.append(pygame.image.load('Imagens/sprite_2.3.png'))
+        elif 184 >= pos[1] >= 159 and 970 >= pos[0] >= 721 and int(maxcoin)>=425: # nave branca
+            if click[0] == 1:
+                sprites.clear()
+                sprites.append(pygame.image.load('Imagens/CaçaBranco_0.png'))
+                sprites.append(pygame.image.load('Imagens/CaçaBranco_1.png'))
+                sprites.append(pygame.image.load('Imagens/CaçaBranco_2.png'))
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                quit()
+            if event.type == KEYDOWN:
+                if event.key == K_BACKSPACE:
+                    loja()
 
         tela.blit(Texto_MaxCoin, (750, 0))
         tela.blit(Texto_Voltar, (0, 0))
