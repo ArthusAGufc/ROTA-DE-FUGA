@@ -370,7 +370,8 @@ def loja():
     fundo_da_loja4 = pygame.image.load('fundo da loja/fundo loja4.png')
     fundo_da_loja5 = pygame.image.load('fundo da loja/fundo loja5.png')
     fundo_da_loja6 = pygame.image.load('fundo da loja/fundo loja6.png')
-    moedas = 600 # quntidade de moedas (deve ser alterado para o arquivo que guarda as moedas
+    global moedas
+    moedas = coin # quntidade de moedas (deve ser alterado para o arquivo que guarda as moedas
 
     while True:
         pos = pygame.mouse.get_pos()  # indentifica a posição do mouse dentro da loja
@@ -652,6 +653,8 @@ def game():
     Fonte_Texto2=pygame.font.SysFont('arial', 50, True, True)
 
     #Pontuação
+    global coin
+    global moedas
     coin=0
     maxcoin=0
     score=0
