@@ -805,8 +805,8 @@ def game():
     background = pygame.image.load('Menu/Mapa-2.jpg')
     background = pygame.transform.scale(background, (largura, altura))
     clock = pygame.time.Clock()
-    Play = pygame.image.load('Imagens para MENU/ENTER.png')
-    Return = pygame.image.load('Imagens para MENU/Return.png')
+    Play = pygame.image.load('Menu/ENTER.png')
+    Return = pygame.image.load('Menu/Return.png')
 
     # Pausando Jogo
     def pause():
@@ -883,7 +883,7 @@ def game():
            tela = pygame.display.set_mode((largura, altura))
            pygame.display.set_caption('Rota de Fuga')
            background = pygame.image.load('Imagens/Mapa-2.jpg')
-           mural = pygame.image.load('Imagens para MENU/CARD_KILL.png')
+           mural = pygame.image.load('Menu/CARD_KILL.png')
            mural = pygame.transform.scale(mural, (500, 300))
 
            pos = pygame.mouse.get_pos()
