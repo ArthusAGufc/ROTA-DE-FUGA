@@ -805,6 +805,8 @@ def game():
     background = pygame.image.load('Menu/Mapa-2.jpg')
     background = pygame.transform.scale(background, (largura, altura))
     clock = pygame.time.Clock()
+    Play = pygame.image.load('Imagens para MENU/ENTER.png')
+    Return = pygame.image.load('Imagens para MENU/Return.png')
 
     # Pausando Jogo
     def pause():
@@ -828,7 +830,17 @@ def game():
         Texto_MaxCoin = Fonte_Texto1.render(f'MaxCoin: {maxcoin}', True, (255, 255, 255))
         Texto_Score = Fonte_Texto1.render(f'Score: {score}', True, (255, 255, 255))
         Texto_HighScore = Fonte_Texto1.render(f'HighScore: {highscore}', True, (255, 255, 255))
-
+        Texto_Coin_2 = Fonte_Texto1.render(f'Coin: {coin}', True, (255, 255, 0))
+        Texto_MaxCoin_2 = Fonte_Texto1.render(f'Coins Max: {maxcoin}', True, (255, 255, 0))       
+                                              
+                                              
+        def textos():
+            tela.blit(Texto_Coin, (570, 0))
+            tela.blit(Texto_MaxCoin, (820, 0))
+            tela.blit(Texto_Score, (0, 0))
+            tela.blit(Texto_HighScore, (200, 0))
+        textos()
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -866,13 +878,43 @@ def game():
         Satellite_Sprites.draw(tela)
         Planetas_Sprites.draw(tela)
         pipe_group.draw(tela)
+                                              
+        def menu_morte():
+           tela = pygame.display.set_mode((largura, altura))
+           pygame.display.set_caption('Rota de Fuga')
+           background = pygame.image.load('Imagens/Mapa-2.jpg')
+           mural = pygame.image.load('Imagens para MENU/CARD_KILL.png')
+           mural = pygame.transform.scale(mural, (500, 300))
+
+           pos = pygame.mouse.get_pos()
+           click = pygame.mouse.get_pressed()
+           tela.blit(background, (0, 0))
+           tela.blit(mural, (230, 50))
+           tela.blit(Texto_Perdeu, (340, 75))
+           tela.blit(Texto_HighScore, (335, 215))
+           tela.blit(Texto_Score, (350, 180))
+           tela.blit(Texto_Coin_2, (350, 290))
+           tela.blit(Texto_MaxCoin_2, (335, 255))
+           tela.blit(Play, (380, 362))
+           tela.blit(Return, (0, 362))
+           if 380 <= pos[0] <= 565 and 362 <= pos[1] <= 408:
+               if click[0] == 1:
+                   game()
+           elif 0 <= pos[0] <= 185 and 362 <= pos[1] <= 408:
+               if click[0] == 1:
+                   menu()
 
         if colisoes or colisoes2 or colisoes3 or colisoes5:
             #pygame.mixer.music.load('Músicas/Snes.mp3')
             #pygame.mixer.music.stop()
-            tela.blit(Texto_Perdeu, (400, 175))
             #sprites.append(pygame.image.load('Naves/Bomba.png'))
-
+            menu_morte()
+            if event.type == KEYDOWN:
+                if event.key == K_RETURN:
+                    game()
+                if event.key == K_BACKSPACE:
+                    menu()
+                                              
         else:
             if score <= 2000:
                 Asteroides_Sprites.update()
