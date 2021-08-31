@@ -707,7 +707,7 @@ def game():
             self.image = pygame.transform.scale(self.image, (232 // 2, 217 // 2))
 
             self.rect = self.image.get_rect()
-            self.rect.y = randrange(0, 400, 100)
+            self.rect.y = randrange(310, 400, 15)
             self.rect.x = largura + randrange(0, 1200, 400)
 
         def update(self):
@@ -723,7 +723,7 @@ def game():
             self.image = pygame.transform.scale(self.image, (232 // 2, 217 // 2))
 
             self.rect = self.image.get_rect()
-            self.rect.y = randrange(0, 400, 100)
+            self.rect.y = randrange(110, 200, 15)
             self.rect.x = largura + randrange(0, 1200, 400)
 
         def update(self):
@@ -739,7 +739,7 @@ def game():
             self.image = pygame.transform.scale(self.image, (232 // 2, 217 // 2))
 
             self.rect = self.image.get_rect()
-            self.rect.y = randrange(0, 400, 100)
+            self.rect.y = randrange(0, 100, 20)
             self.rect.x = largura + randrange(0, 1200, 400)
 
         def update(self):
@@ -836,7 +836,7 @@ def game():
                                               
         def textos():
             tela.blit(Texto_Coin, (570, 0))
-            tela.blit(Texto_MaxCoin, (820, 0))
+            tela.blit(Texto_MaxCoin, (800, 0))
             tela.blit(Texto_Score, (0, 0))
             tela.blit(Texto_HighScore, (200, 0))
         textos()
@@ -936,12 +936,6 @@ def game():
             #Coin.play()
             coin = coin + 1
             Moeda_Sprites.add(Moeda())
-
-        # Pontuação
-        tela.blit(Texto_Coin, (570, 0))
-        tela.blit(Texto_MaxCoin, (750, 0))
-        tela.blit(Texto_Score, (0, 0))
-        tela.blit(Texto_HighScore, (200, 0))
 
         # Arquivo Moeda
         file = open('maxcoin.txt', 'r')
