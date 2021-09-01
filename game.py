@@ -895,8 +895,8 @@ def game():
            tela.blit(Texto_Score, (350, 180))
            tela.blit(Texto_Coin_2, (350, 290))
            tela.blit(Texto_MaxCoin_2, (335, 255))
-           tela.blit(Play, (380, 362))
-           tela.blit(Return, (0, 362))
+           tela.blit(Play, (250, 362))
+           tela.blit(Return, (500, 362))
            if 380 <= pos[0] <= 565 and 362 <= pos[1] <= 408:
                if click[0] == 1:
                    game()
