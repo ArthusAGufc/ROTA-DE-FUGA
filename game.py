@@ -885,7 +885,7 @@ def game():
         def menu_morte():
            tela = pygame.display.set_mode((largura, altura))
            pygame.display.set_caption('Rota de Fuga')
-           background = pygame.image.load('Imagens/Mapa-2.jpg')
+           background = pygame.image.load('Menu/Mapa-2.jpg')
            mural = pygame.image.load('Menu/CARD_KILL.png')
            mural = pygame.transform.scale(mural, (500, 300))
 
@@ -936,8 +936,7 @@ def game():
         
         if colisoes or colisoes2 or colisoes3 or colisoes5:
             #pygame.mixer.music.load('Músicas/Snes.mp3')
-            #pygame.mixer.music.stop()
-            #sprites.append(pygame.image.load('Naves/Bomba.png'))
+            #pygame.mixer.music.stop()            
             menu_morte()
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
