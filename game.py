@@ -7,7 +7,7 @@ from pipes import *
 from random import randrange
 
 # Configurações das Pipes
-Speed = 10
+Speed = 16
 largura= 1000
 altura= 400
 
@@ -21,7 +21,7 @@ sprite2 = pygame.image.load('Naves/Naves_TER/Nave Fup/NaveFup_1.png')
 sprite3 = pygame.image.load('Naves/Naves_TER/Nave Fup/NaveFup_2.png')
 largura = 1000
 altura = 400
-Obstaculos_Speed = 13
+Obstaculos_Speed = 16
 Nave_Speed = 8
 sprites = [sprite1, sprite2, sprite3]
 
@@ -657,7 +657,20 @@ def game():
             if self.rect[0] < -100:
                 self.rect.y = randrange(0, 400, 100)
                 self.rect.x = largura + randrange(0, 1200, 400)
+     
+    class Terra(pygame.sprite.Sprite):
+        def __init__(self):
+            pygame.sprite.Sprite.__init__(self)
+            self.image = pygame.image.load('Obstaculos/Terra.png')
+            self.image = pygame.transform.scale(self.image, (900, 900))
 
+            self.rect = self.image.get_rect()
+            self.rect.topleft = 1900, -300
+
+        def update(self):
+            self.rect[0] -= Obstaculos_Speed
+    
+    
     Asteroides_Sprites = pygame.sprite.Group()
     for i in range(3):
         Asteroides_Sprites.add(Obstaculo())
@@ -716,22 +729,6 @@ def game():
                 self.rect.y = randrange(0, 400, 100)
                 self.rect.x = largura + randrange(0, 1200, 400)
 
-    class Planeta3(pygame.sprite.Sprite):
-        def __init__(self):
-            pygame.sprite.Sprite.__init__(self)
-            self.image = pygame.image.load('Obstaculos/Terra.png')
-            self.image = pygame.transform.scale(self.image, (232 // 2, 217 // 2))
-
-            self.rect = self.image.get_rect()
-            self.rect.y = randrange(110, 200, 15)
-            self.rect.x = largura + randrange(0, 1200, 400)
-
-        def update(self):
-            self.rect[0] -= Obstaculos_Speed
-            if self.rect[0] < -100:
-                self.rect.y = randrange(0, 400, 100)
-                self.rect.x = largura + randrange(0, 1200, 400)
-
     class Planeta4(pygame.sprite.Sprite):
         def __init__(self):
             pygame.sprite.Sprite.__init__(self)
@@ -751,9 +748,11 @@ def game():
     Planetas_Sprites = pygame.sprite.Group()
     Planetas_Sprites.add(Planeta1())
     Planetas_Sprites.add(Planeta2())
-    Planetas_Sprites.add(Planeta3())
     Planetas_Sprites.add(Planeta4())
 
+    Terra_Sprites = pygame.sprite.Group()
+    Terra_Sprites.add(Terra())
+    
     # Criando Moeda
     class Moeda(pygame.sprite.Sprite):
         def __init__(self):
@@ -826,12 +825,15 @@ def game():
         tela.blit(background, (0, 0))
 
         Texto_Perdeu = Fonte_Texto2.render('Game Over', True, (204, 50, 50))
+        Texto_Ganhou = Fonte_Texto2.render('Você Ganhou!', True, (204, 50, 50))
         Texto_Coin = Fonte_Texto1.render(f'Coin: {coin}', True, (255, 255, 255))
         Texto_MaxCoin = Fonte_Texto1.render(f'MaxCoin: {maxcoin}', True, (255, 255, 255))
         Texto_Score = Fonte_Texto1.render(f'Score: {score}', True, (255, 255, 255))
         Texto_HighScore = Fonte_Texto1.render(f'HighScore: {highscore}', True, (255, 255, 255))
         Texto_Coin_2 = Fonte_Texto1.render(f'Coin: {coin}', True, (255, 255, 0))
         Texto_MaxCoin_2 = Fonte_Texto1.render(f'Coins Max: {maxcoin}', True, (255, 255, 0))       
+        Texto_loop = Fonte_Texto1.render('Você Saiu do Loop!', True, (255, 255, 255))
+        Texto_Saida_loop = Fonte_Texto1.render('Saidas do Loop:', True, (255, 255, 255))       
                                               
                                               
         def textos():
@@ -871,7 +873,8 @@ def game():
         colisoes3 = pygame.sprite.spritecollide(nave, Planetas_Sprites, False, pygame.sprite.collide_mask)
         colisoes4 = pygame.sprite.spritecollide(nave, Moeda_Sprites, bool(pygame.sprite.collide_rect))
         colisoes5 = pygame.sprite.spritecollide(nave, pipe_group, False, pygame.sprite.collide_mask)
-
+        colisao_terra = pygame.sprite.spritecollide(nave, Terra_Sprites, False, pygame.sprite.collide_mask)
+        
         Nave_Sprites.draw(tela)
         Asteroides_Sprites.draw(tela)
         Moeda_Sprites.draw(tela)
@@ -903,7 +906,34 @@ def game():
            elif 0 <= pos[0] <= 185 and 362 <= pos[1] <= 408:
                if click[0] == 1:
                    menu()
+        
+        def menu_venceu():
+            tela = pygame.display.set_mode((largura, altura))
+            pygame.display.set_caption('Rota de Fuga')
+            background = pygame.image.load('Menu/Mapa-2.jpg')
+            mural = pygame.image.load('Menu/CARD_KILL.png')
+            mural = pygame.transform.scale(mural, (500, 300))
 
+            pos = pygame.mouse.get_pos()
+            click = pygame.mouse.get_pressed()
+            tela.blit(background, (0, 0))
+            tela.blit(mural, (230, 50))
+            tela.blit(Texto_Ganhou,(340, 75))
+            tela.blit(Texto_loop,(360,150))
+            tela.blit(Texto_HighScore, (480, 215))
+            tela.blit(Texto_Score, (280, 215))
+            tela.blit(Texto_Coin_2, (280, 255))
+            tela.blit(Texto_MaxCoin_2, (480, 255))
+            tela.blit(Texto_Saida_loop,(280,290))
+            tela.blit(Play, (500, 362))
+            tela.blit(Return, (265, 362))
+            if 500 <= pos[0] <= 680 and 362 <= pos[1] <= 408:
+                if click[0] == 1:
+                    game()
+            elif 265 <= pos[0] <= 450 and 362 <= pos[1] <= 408:
+                if click[0] == 1:
+                    menu()
+        
         if colisoes or colisoes2 or colisoes3 or colisoes5:
             #pygame.mixer.music.load('Músicas/Snes.mp3')
             #pygame.mixer.music.stop()
@@ -914,7 +944,9 @@ def game():
                     game()
                 if event.key == K_BACKSPACE:
                     menu()
-                                              
+        elif colisao_terra:
+            menu_venceu()                                      
+        
         else:
             if score <= 2000:
                 Asteroides_Sprites.update()
@@ -927,7 +959,10 @@ def game():
             if score >= 5000:
                 Planetas_Sprites.remove(Planetas_Sprites)
                 pipe_group.update()
-
+            if score >= 6500:
+                Terra_Sprites.draw(tela)
+                Terra_Sprites.update()
+            
             Nave_Sprites.update()
             Moeda_Sprites.update()
             score += 1
