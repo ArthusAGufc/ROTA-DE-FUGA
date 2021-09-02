@@ -902,12 +902,13 @@ def game():
            tela.blit(Texto_Saida_loop,(270,290))
            tela.blit(Play, (250, 362))
            tela.blit(Return, (500, 362))
-           if 380 <= pos[0] <= 565 and 362 <= pos[1] <= 408:
-               if click[0] == 1:
-                   game()
-           elif 0 <= pos[0] <= 185 and 362 <= pos[1] <= 408:
-               if click[0] == 1:
-                   menu()
+        
+           if 500 <= pos[0] <= 680 and 362 <= pos[1] <= 408:
+                if click[0] == 1:
+                    game()
+            elif 265 <= pos[0] <= 450 and 362 <= pos[1] <= 408:
+                if click[0] == 1:
+                    menu()
         
         def menu_venceu():
             tela = pygame.display.set_mode((largura, altura))
@@ -929,9 +930,7 @@ def game():
             tela.blit(Texto_Saida_loop,(270,290))
             tela.blit(Play, (500, 362))
             tela.blit(Return, (265, 362))
-            
-            
-
+         
             if 500 <= pos[0] <= 680 and 362 <= pos[1] <= 408:
                 if click[0] == 1:
                     game()
