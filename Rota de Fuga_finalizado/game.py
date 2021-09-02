@@ -326,18 +326,18 @@ def creditos():
         Texto_Integrante3 = Fonte_Integrantes.render('KAUAN DEYVID BEZERRA DE SOUSA', True, (255, 255, 255))
         Texto_Integrante4 = Fonte_Integrantes.render('MARCOS GABRIEL DE MESQUITA MAURICIO', True, (255, 255, 255))
         Texto_Integrante5 = Fonte_Integrantes.render('PAULO HENRIQUE DA SILVA HOLANDA', True, (255, 255, 255))
-        Texto_Integrante6 = Fonte_Integrantes.render('Orientador: Rafael Ivo', True, (255, 255, 255))
+        Texto_Integrante6 = Fonte_Integrantes.render('Orientador: PROF. DOUTOR RAFAEL IVO', True, (255, 255, 255))
         Texto_Equipe = Fonte_Creditos.render('Shadow Demons', True, (255, 255, 255))
 
         # Imagem
-        tela.blit(Texto_Creditos, (200, 0))
+        tela.blit(Texto_Creditos, (195, 0))
         tela.blit(Texto_Integrante1, (120, 50))
         tela.blit(Texto_Integrante2, (130, 100))
         tela.blit(Texto_Integrante3, (50, 150))
         tela.blit(Texto_Integrante4, (10, 200))
         tela.blit(Texto_Integrante5, (50, 250))
-        tela.blit(Texto_Integrante6, (130, 300))
-        tela.blit(Texto_Equipe, (600, 300))
+        tela.blit(Texto_Integrante6, (45, 300))
+        tela.blit(Texto_Equipe, (610, 300))
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -905,10 +905,10 @@ def game():
         
            if 500 <= pos[0] <= 680 and 362 <= pos[1] <= 408:
                 if click[0] == 1:
-                    game()
-            elif 265 <= pos[0] <= 450 and 362 <= pos[1] <= 408:
-                if click[0] == 1:
                     menu()
+           elif 265 <= pos[0] <= 450 and 362 <= pos[1] <= 408:
+                if click[0] == 1:
+                    game()
         
         def menu_venceu():
             tela = pygame.display.set_mode((largura, altura))
@@ -933,10 +933,10 @@ def game():
          
             if 500 <= pos[0] <= 680 and 362 <= pos[1] <= 408:
                 if click[0] == 1:
-                    game()
+                    menu()
             elif 265 <= pos[0] <= 450 and 362 <= pos[1] <= 408:
                 if click[0] == 1:
-                    menu()
+                    game()
         
         if colisoes or colisoes2 or colisoes3 or colisoes5:
             #pygame.mixer.music.load('Músicas/Snes.mp3')
